@@ -9,14 +9,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.block.Block;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginLoader;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.util.config.Configuration;
 
@@ -29,22 +27,6 @@ public class FarmMaster extends JavaPlugin {
     private boolean bNaturalMode;
     private boolean bWoolMode;
     private boolean bSandTilling;
-
-    public FarmMaster(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) {
-
-        super(pluginLoader, instance, desc, folder, plugin, cLoader);
-
-        folder.mkdirs();
-
-        File oldFile = new File(getDataFolder(), "plants.db");
-        if (oldFile.exists()) {
-            oldFile.delete();
-        }
-
-        this.bNaturalMode = false;
-        this.bWoolMode = false;
-        this.bSandTilling = false;
-    }
 
     private void writeConfigFile(File configFile) {
         try {
@@ -118,22 +100,30 @@ public class FarmMaster extends JavaPlugin {
         }
     }
 
-    public boolean sandTilling()
-    {
+    public boolean sandTilling() {
         return this.bSandTilling;
     }
-    
-    public boolean naturalMode()
-    {
+
+    public boolean naturalMode() {
         return this.bNaturalMode;
     }
 
-    public boolean woolMode()
-    {
+    public boolean woolMode() {
         return this.bWoolMode;
     }
 
     public void onEnable() {
+        getDataFolder().mkdirs();
+
+        File oldFile = new File(getDataFolder(), "plants.db");
+        if (oldFile.exists()) {
+            oldFile.delete();
+        }
+
+        this.bNaturalMode = false;
+        this.bWoolMode = false;
+        this.bSandTilling = false;
+
         try {
 
             this.loadConfig();
