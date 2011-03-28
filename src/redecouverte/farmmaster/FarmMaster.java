@@ -138,9 +138,9 @@ public class FarmMaster extends JavaPlugin {
             PluginManager pm = getServer().getPluginManager();
 
             mBlockListener = new EBlockListener(this);
-            pm.registerEvent(Type.BLOCK_DAMAGED, mBlockListener, Priority.Normal, this);
-            pm.registerEvent(Type.BLOCK_PLACED, mBlockListener, Priority.Monitor, this);
-            pm.registerEvent(Type.BLOCK_RIGHTCLICKED, mBlockListener, Priority.Monitor, this);
+            pm.registerEvent(Type.BLOCK_DAMAGE, mBlockListener, Priority.Normal, this);
+            pm.registerEvent(Type.BLOCK_PLACE, mBlockListener, Priority.Monitor, this);
+            pm.registerEvent(Type.PLAYER_INTERACT, mBlockListener, Priority.Monitor, this);
             //pm.registerEvent(Type.BLOCK_PHYSICS, mBlockListener, Priority.Normal, this);
 
             PluginDescriptionFile pdfFile = this.getDescription();

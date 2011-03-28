@@ -7,13 +7,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockDamageLevel;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockRightClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class EBlockListener extends BlockListener {
@@ -136,7 +134,7 @@ public class EBlockListener extends BlockListener {
 
 
             if (parent.naturalMode() || parent.woolMode()) {
-                if (event.getDamageLevel() == BlockDamageLevel.BROKEN) {
+                if (event.getInstaBreak()) {
                     Material type = b.getType();
 
                     switch (type) {
@@ -265,37 +263,6 @@ public class EBlockListener extends BlockListener {
                     ItemStack is = new ItemStack(b.getType());
                     is.setAmount(1);
                     if (parent.addPlantNaturally(b, is)) {
-                    }
-
-                }
-            }
-
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "FarmMaster: error: " + e.getMessage());
-            e.printStackTrace();
-            return;
-        }
-    }
-
-    @Override
-    public void onBlockRightClick(BlockRightClickEvent event) {
-        try {
-            if (parent.naturalMode()) {
-                Block b = event.getBlock();
-
-                if (b.getType() == Material.SOIL) {
-
-                    int y = b.getY() + 1;
-                    if (y > 126) {
-                        return;
-                    }
-
-                    Block plantBlock = b.getWorld().getBlockAt(b.getX(), y, b.getZ());
-
-                    if (parent.addPlantNaturally(plantBlock, event.getItemInHand())) {
-                        ItemStack is = new ItemStack(event.getItemInHand().getType());
-                        is.setAmount(1);
-                        event.getPlayer().getInventory().removeItem(is);
                     }
 
                 }
