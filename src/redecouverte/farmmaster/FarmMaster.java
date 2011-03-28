@@ -23,6 +23,7 @@ public class FarmMaster extends JavaPlugin {
     private static final Logger logger = Logger.getLogger("Minecraft");
     private YmlDB plantDB;
     private EBlockListener mBlockListener;
+    private EPlayerListener mPlayerListener;
     private Configuration config;
     private boolean bNaturalMode;
     private boolean bWoolMode;
@@ -138,9 +139,10 @@ public class FarmMaster extends JavaPlugin {
             PluginManager pm = getServer().getPluginManager();
 
             mBlockListener = new EBlockListener(this);
+            mPlayerListener = new EPlayerListener(this);
             pm.registerEvent(Type.BLOCK_DAMAGE, mBlockListener, Priority.Normal, this);
             pm.registerEvent(Type.BLOCK_PLACE, mBlockListener, Priority.Monitor, this);
-            pm.registerEvent(Type.PLAYER_INTERACT, mBlockListener, Priority.Monitor, this);
+            pm.registerEvent(Type.PLAYER_INTERACT, mPlayerListener, Priority.Monitor, this);
             //pm.registerEvent(Type.BLOCK_PHYSICS, mBlockListener, Priority.Normal, this);
 
             PluginDescriptionFile pdfFile = this.getDescription();
